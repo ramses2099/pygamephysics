@@ -1,7 +1,7 @@
 from pygame.math import Vector2 as vec
 
-WIDTH = 600
-HEIGHT = 400
+WIDTH = 1280
+HEIGHT = 720
 TITLE = "Physics tutorial"
 TITLESIZE = 16
 FONT = "assets/fonts/homespun.ttf"
@@ -13,6 +13,8 @@ COLORS = {
     'red':(255, 0, 0),
     'green':(0, 255, 0),
     'blue':(0, 0, 255),
+    'yellow':(255, 255, 0),
+    'purple':(160,32,240)
 }
 
 INPUTS = {
@@ -27,3 +29,5 @@ INPUTS = {
     'scroll_up': False,
     'scroll_down': False,
 }
+
+DIRECTION = ('horizontal','vertical')

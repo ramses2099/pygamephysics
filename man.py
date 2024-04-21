@@ -1,5 +1,7 @@
 import pygame, sys, os
+import pymunk
 from settings import *
+# from objects import *
 
 class Game:
     def __init__(self):
@@ -9,6 +11,16 @@ class Game:
       pygame.display.set_caption(TITLE)
       self.font = pygame.font.Font(FONT, TITLESIZE)
       self.running = True
+      
+    #   self.all_sprites = pygame.sprite.Group()
+    #   self.collision_sprite = pygame.sprite.Group()
+    #   self.st_obj1 = StaticObstacle((100, 300),(100, 50),[self.all_sprites, self.collision_sprite])
+    #   self.st_obj2 = StaticObstacle((800, 600),(100, 50),[self.all_sprites, self.collision_sprite])
+    #   self.st_obj3 = StaticObstacle((900, 200),(100, 50),[self.all_sprites, self.collision_sprite])
+    #   self.mv_obj1 = MovingVerticalObstacle((200, 300),(200, 60),[self.all_sprites, self.collision_sprite])
+    #   self.mv_obj2 = MovingHorizontalObstacle((850, 350),(100, 100),[self.all_sprites, self.collision_sprite])
+    #   self.player = Player(self.all_sprites, self.collision_sprite)
+    #   self.ball = Ball(self.all_sprites, self.collision_sprite, self.player)
       
     def debugger(self, debug_list):
         for idx, name in enumerate(debug_list):
@@ -55,11 +67,29 @@ class Game:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     INPUTS['escape'] = True
-                    self.running = False 
-                    
+                    self.running = False
+                elif event.key == pygame.K_SPACE:
+                    INPUTS['space'] = True
+                elif event.key in (pygame.K_LEFT, pygame.K_a):
+                    INPUTS['left'] = True
+                elif event.key in (pygame.K_RIGHT, pygame.K_d):
+                    INPUTS['right'] = True
+                elif event.key in (pygame.K_UP, pygame.K_w):
+                    INPUTS['up'] = True
+                elif event.key in (pygame.K_DOWN, pygame.K_x):
+                    INPUTS['down'] = True
+            
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_SPACE:
-                    INPUTS['space'] = False   
+                    INPUTS['space'] = False
+                elif event.key in (pygame.K_LEFT, pygame.K_a):
+                    INPUTS['left'] = False
+                elif event.key in (pygame.K_RIGHT, pygame.K_d):
+                    INPUTS['right'] = False
+                elif event.key in (pygame.K_UP, pygame.K_w):
+                    INPUTS['up'] = False
+                elif event.key in (pygame.K_DOWN, pygame.K_x):
+                    INPUTS['down'] = False 
       
     def loop(self):
         while self.running:
@@ -69,13 +99,16 @@ class Game:
             # state machine
             # update
             
+            # self.all_sprites.update(dt)
+            # self.all_sprites.draw(self.screen)
+            
             # draw
             self.debugger([
                 str(f'FPS: {round(self.clock.get_fps(), 2)}'),
             ])
             
             #
-            self.custom_cursor() 
+            # self.custom_cursor() 
             #
             pygame.display.flip()
 
