@@ -1,7 +1,8 @@
 import pygame, sys, os
-import pymunk
+import pymunk.pygame_util
 from settings import *
 # from objects import *
+from objpymunk import *
 
 class Game:
     def __init__(self):
@@ -11,6 +12,19 @@ class Game:
       pygame.display.set_caption(TITLE)
       self.font = pygame.font.Font(FONT, TITLESIZE)
       self.running = True
+      
+      # pymunk word
+      self.space = pymunk.Space()
+      self.space.gravity =0, 981
+      self.draw_options = pymunk.pygame_util.DrawOptions(self.screen)
+      
+      # pymunk object
+      self.ball = Ball(self.space,(50, 50), 25)     
+      self.floor = Floor(self.space,(WIDTH/2, HEIGHT),(WIDTH,32))
+      
+      self.all_sprites = pygame.sprite.Group()
+      self.ship = Ship(self.space, self.all_sprites, IMAGE_SHIP,(WIDTH/2,50))
+      self.ball = Ball(self.space,(WIDTH/2, 450), 25)
       
     #   self.all_sprites = pygame.sprite.Group()
     #   self.collision_sprite = pygame.sprite.Group()
@@ -99,8 +113,10 @@ class Game:
             # state machine
             # update
             
-            # self.all_sprites.update(dt)
-            # self.all_sprites.draw(self.screen)
+            self.all_sprites.update(dt)
+            self.all_sprites.draw(self.screen)
+            
+                       
             
             # draw
             self.debugger([
@@ -109,8 +125,14 @@ class Game:
             
             #
             # self.custom_cursor() 
+            
+            # pymunk debug
+            self.space.debug_draw(self.draw_options)
             #
             pygame.display.flip()
+            # pymunk update world
+            
+            self.space.step(dt)
 
 
 if __name__ == "__main__":

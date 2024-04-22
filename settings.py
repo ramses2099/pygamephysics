@@ -1,3 +1,4 @@
+import pygame
 from pygame.math import Vector2 as vec
 
 WIDTH = 1280
@@ -31,3 +32,5 @@ INPUTS = {
 }
 
 DIRECTION = ('horizontal','vertical')
+
+IMAGE_SHIP = pygame.image.load('./assets/images/charaters/player/ship_A.png')
